@@ -5,9 +5,9 @@ local config = require "lib.config"
 local menu = require "states.menu"
 local delaytest = require "states.delaytest"
 function love.load()
-  love.window.setTitle("Beats Me Too")
+   love.window.setTitle("Beats Me Too")
 
-  assert(love.window.setMode(1280, 720, {
+  assert(love.window.setMode(0, 0, {
     fullscreen = config.fullscreen,
     vsync = config.vsync,
     msaa = config.msaa,
@@ -28,7 +28,7 @@ function love.load()
 
   love.mouse.setCursor(love.mouse.newCursor("assets/cursor_pointer3D_shadow.png", 0, 0))
 
-  if love.filesystem.isFile("assets/gamecontrollerdb.txt") then
+  if love.filesystem.getInfo("assets/gamecontrollerdb.txt")  then
     love.joystick.loadGamepadMappings("assets/gamecontrollerdb.txt")
     print("Loaded assets/gamecontrollerdb.txt mappings")
   end

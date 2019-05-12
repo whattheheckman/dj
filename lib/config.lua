@@ -4,7 +4,7 @@ local filename = "config.lua"
 
 local config = {
   delay = nil,
-  fullscreen = false,
+  fullscreen = true,
   vsync = true,
   msaa = 8,
   gamepad = true,
@@ -20,7 +20,7 @@ setmetatable(config, {
   end
 })
 
-if love.filesystem.isFile(filename) then
+if love.filesystem.getInfo(filename) then
   local function patch(t, target)
     for key, value in pairs(t) do
       if type(value) == "table" and type(target[key]) == "table" then
