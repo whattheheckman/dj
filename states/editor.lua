@@ -13,8 +13,8 @@ function state:init()
   self.markerFont = love.graphics.newFont(12)
   self.timeFont = love.graphics.newFont("assets/fonts/Roboto-Light.ttf", 14)
   self.warningFont = love.graphics.newFont("assets/fonts/Roboto-Bold.ttf", 16)
-  self.hitSound = love.audio.newSource("assets/sounds/ui/Laser_Shoot12.wav")
-  self.fadeSound = love.audio.newSource("assets/sounds/ui/Hit_Hurt8.wav")
+  self.hitSound = love.audio.newSource("assets/sounds/ui/Laser_Shoot12.wav", "static")
+  self.fadeSound = love.audio.newSource("assets/sounds/ui/Hit_Hurt8.wav", "static")
 end
 
 function state:enter(_, filename, song, data, mods)
@@ -23,7 +23,7 @@ function state:enter(_, filename, song, data, mods)
   self.mods = mods or {}
 
   self.audioData = data
-  self.audioSource = love.audio.newSource(self.audioData)
+  self.audioSource = love.audio.newSource(self.audioData, "stream")
 
   self.audioSource:play()
   self.audioSource:pause()
@@ -286,7 +286,7 @@ function state:wheelmoved(_, y)
 end
 
 function state:update()
-    if self.audioSource:isStopped() then
+    if not self.audioSource:isPlaying() then
         self.audioSource:play()
         self.audioSource:pause()
         self.audioSource:seek(self.audioData:getSampleCount() - 1, "samples")
