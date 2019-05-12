@@ -732,12 +732,14 @@ function state:update(dt)
     else
         local fade = 0
 
+        --keyboard Crossfading, orginallly was fade = fade -/+ 1
         if love.keyboard.isDown("z") then
-            fade = fade - 1
-        end
-
-        if love.keyboard.isDown("x") then
-            fade = fade + 1
+            fade = -1
+        -- using elseif because controller fade control uses it (and that works fine)
+        elseif love.keyboard.isDown("x") then
+            fade = 1
+        else
+          fade = 0
         end
 
         if fade ~= self.fade then

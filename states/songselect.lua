@@ -443,7 +443,7 @@ function state:draw()
     local y = self:getEntryY(i, true)
 
     love.graphics.setColor(63, 63, 63, i == self.indexSong and 224 or  63)
-    love.graphics.rectangle("fill", love.window.toPixels(x), love.window.toPixels(y), love.window.toPixels(600, 60))
+    love.graphics.rectangle("line", love.window.toPixels(x), love.window.toPixels(y), love.window.toPixels(600, 60))
     love.graphics.setColor(63, 63, 63, i == self.indexSong and 255 or 127)
     love.graphics.rectangle("line", love.window.toPixels(x), love.window.toPixels(y), love.window.toPixels(600, 60))
 
