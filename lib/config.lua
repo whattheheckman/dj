@@ -4,7 +4,7 @@ local filename = "config.lua"
 
 local config = {
   delay = nil,
-  fullscreen = true,
+  fullscreen = false,
   vsync = true,
   msaa = 8,
   gamepad = true,

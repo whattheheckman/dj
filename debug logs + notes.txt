@@ -1,0 +1,48 @@
+editor crash
+Program starting as '"C:\Program Files\love\love.exe" "C:\Users\SMASH Scholar\Projects\beats me\dj"'.
+Program 'love.exe' started in 'C:\Users\SMASH Scholar\Projects\beats me\dj' (pid: 8736).
+Loaded assets/gamecontrollerdb.txt mappings
+LOVE - Warning: states/songselect.lua:21: Using deprecated function love.filesystem.isDirectory (replaced by love.filesystem.getInfo)
+LOVE - Warning: states/songselect.lua:23: Using deprecated function love.filesystem.isFile (replaced by love.filesystem.getInfo)
+Error: states/editor.lua:289: attempt to call method 'isStopped' (a nil value)
+stack traceback:
+	lib/hump/gamestate.lua:96: in function 'handler'
+	[string "boot.lua"]:637: in function 'isStopped'
+	states/editor.lua:289: in function 'update'
+	[string "boot.lua"]:509: in function <[string "boot.lua"]:493>
+	[C]: in function 'xpcall'
+Program completed in 10.73 seconds (pid: 8736).
+
+
+using getInfo instead of isFile and getDirectory w/o recoding makes no graphics
+
+game.lua errors
+Program starting as '"C:\Program Files\love\love.exe" "C:\Users\SMASH Scholar\Projects\beats me\dj"'.
+Program 'love.exe' started in 'C:\Users\SMASH Scholar\Projects\beats me\dj' (pid: 8032).
+Loaded assets/gamecontrollerdb.txt mappings
+LOVE - Warning: states/songselect.lua:21: Using deprecated function love.filesystem.isDirectory (replaced by love.filesystem.getInfo)
+LOVE - Warning: states/songselect.lua:23: Using deprecated function love.filesystem.isFile (replaced by love.filesystem.getInfo)
+Error: states/game.lua:515: attempt to call method 'isStopped' (a nil value)
+stack traceback:
+	lib/hump/gamestate.lua:96: in function 'handler'
+	[string "boot.lua"]:637: in function 'isStopped'
+	states/game.lua:515: in function 'update'
+	[string "boot.lua"]:509: in function <[string "boot.lua"]:493>
+	[C]: in function 'xpcall'
+Program completed in 3.19 seconds (pid: 8032).
+
+
+
+game.lua 513-522 (gameend state swtich)
+function state:update(dt)
+    if self.audioSource:isStopped() == false then
+        if self.startFromEditor then
+            gamestate.pop()
+        else
+            gamestate.switch(win, self.filename, self.song, self.stats)
+        end
+
+        return
+    end
+
+^ that code doesn't work anymore, need to check for song end by using length or beats played, idk something like that, at least not audio stuff
