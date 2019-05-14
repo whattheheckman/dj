@@ -102,14 +102,14 @@ function state:draw()
   love.graphics.setStencilTest("equal", 0)
 
   -- Draw empty part
-  love.graphics.setColor(32, 32, 32, self.fade * 200)
+  love.graphics.setColor(32/255, 32/255, 32/255, self.fade * 200)
   love.graphics.circle("fill", cx, cy, love.window.toPixels(radius, radius * 2))
 
   -- Draw fill
   local a1 = (time % (math.pi * 2)) + math.sin(math.cos(time / 4) * math.pi * 2) * math.pi
   local a2 = (time % (math.pi * 2)) + math.cos(math.sin(time / 4) * math.pi * 2) * math.pi
 
-  love.graphics.setColor(150, 150, 150, self.fade * 255)
+  love.graphics.setColor(150/255, 150/255, 150/255, self.fade * 255)
   love.graphics.arc("fill", cx, cy, radius, a1, a2, radius * 2)
 
   love.graphics.setStencilTest()

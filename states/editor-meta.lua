@@ -136,7 +136,7 @@ function state:textinput(text)
 end
 
 function state:draw()
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(255/255, 255/255, 255/255)
   love.graphics.setFont(self.fontHeader)
   love.graphics.print("Track metadata editor", 32, 32)
   love.graphics.setFont(self.fontKeyValue)
@@ -154,14 +154,14 @@ function state:draw()
     local value
 
     if i == self.index then
-      love.graphics.setColor(255, 255, 255, 70)
+      love.graphics.setColor(255/255, 255/255, 255/255, 70/255)
 
       if self.editstate then
         love.graphics.rectangle("fill", keyValueX - 6, y - 6, keyValueWidth + 12, 24 + 12)
 
         if field.type == "string" then
           local x = keyValueX + self.fontKeyValue:getWidth(self.editvalue:sub(1, self.cursorpos))
-          love.graphics.setColor(255, 255, 255)
+          love.graphics.setColor(255/255, 255/255, 255/255)
           love.graphics.line(x, y - 4, x, y + 24 + 4)
         end
       else
@@ -185,10 +185,10 @@ function state:draw()
       value = tostring(value)
     end
 
-    love.graphics.setColor(255, 255, 255, 200)
+    love.graphics.setColor(255/255, 255/255, 255/255, 200/255)
     love.graphics.setFont(self.fontKeyName)
     love.graphics.print(field.name, keyNameX, y)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.setFont(self.fontKeyValue)
     love.graphics.print(value, keyValueX, y)
   end

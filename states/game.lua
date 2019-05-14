@@ -80,7 +80,7 @@ function state:enter(_, filename, song, data, mods, startFromEditor)
 
   if song.video then
     local videoname = util.filepath(filename) .. song.video
-    self.video = love.graphics.newVideo(videoname, false)
+    self.video = love.graphics.newVideo(videoname)
     self.video:play()
   elseif self.video then
     print("failed to deinit game.video!")
@@ -511,7 +511,7 @@ function state:getFrequencyBucket(freq)
 end
 
 function state:update(dt)
-    if self.audioSource:isStopped() then
+    if self.audioSource:isPlaying() ~= true  then
         if self.startFromEditor then
             gamestate.pop()
         else
@@ -889,21 +889,21 @@ function state:update(dt)
         end
     end
 
-    love.graphics.setBackgroundColor(100, 100, 100)
+    love.graphics.setBackgroundColor(100/255, 100/255, 100/255)
     -- local v = (self.beatVolume / 8) * 255
     -- love.graphics.setBackgroundColor(v, v, v)
 end
 
 local function draw_fader_back(x, y)
-  love.graphics.setColor( 50,  50,  50)
+  love.graphics.setColor( 50/255,  50/255,  50/255)
   love.graphics.circle("fill", x,      y, 24)
   love.graphics.circle("fill", x + 64, y, 24)
-  love.graphics.setColor(150, 150, 150)
+  love.graphics.setColor(150/255, 150/255, 150/255)
   love.graphics.circle("line", x,      y, 24)
   love.graphics.circle("line", x + 64, y, 24)
-  love.graphics.setColor( 50,  50,  50)
+  love.graphics.setColor( 50/255,  50/255,  50/255)
   love.graphics.rectangle("fill", x, y - 24, 64, 48)
-  love.graphics.setColor(150, 150, 150)
+  love.graphics.setColor(150/255, 150/255, 150/255)
   love.graphics.line(x, y - 24, x + 64, y - 24)
   love.graphics.line(x, y + 24, x + 64, y + 24)
 end
@@ -912,12 +912,12 @@ local function draw_button(x, y, buttonstate, color)
   local edge, fill, blip
 
   if buttonstate == "normal" then
-    edge = {255 * 0.8, 255 * 0.8, 255 * 0.8}
-    fill = {255 * 0.2, 255 * 0.2, 255 * 0.2}
-    blip = {130, 130, 130}
+    edge = {204/255, 204/255, 204/255} --changed from 255 * 0.8 to 204
+    fill = {51/255, 51/255, 51/255} --changed from 255 * 0.2 to 51
+    blip = {130/255, 130/255, 130/255}
   elseif buttonstate == "used" then
-    edge = {255 * 0.8, 255 * 0.8, 255 * 0.8}
-    fill = {255 * 0.2, 255 * 0.2, 255 * 0.2}
+    edge = {204/255, 204/255, 204/255}
+    fill = {204/255, 204/255, 204/255}
     blip = color
   elseif buttonstate == "pressed" then
     edge = {color[1] * 0.4, color[2] * 0.4, color[3] * 0.4}
@@ -1001,7 +1001,7 @@ function state:draw()
     end
 
     love.graphics.setFont(self.regularFont)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     -- love.graphics.print(math.floor(position * 4) / 4, 2, 2)
 
     local x = width / 2
@@ -1016,20 +1016,20 @@ function state:draw()
     }
 
     local colors = {
-        [1] = {127, 255,  50},
-        [2] = {255,  50,  50},
-        [3] = {  0, 127, 255},
+        [1] = {127/255, 255/255,  50/255},
+        [2] = {255/255,  50/255,  50/255},
+        [3] = {  0/255, 127/255, 255/255},
     }
 
     local colorsByLane
 
     if self.song.mode == "5key" then
         colorsByLane = {
-            [1] = {255, 255,  50},
-            [2] = {255, 100, 200},
-            [3] = {127, 255,  50},
-            [4] = {255, 127,  50},
-            [5] = { 50, 200, 255}
+            [1] = {255/255, 255/255,  50/255},
+            [2] = {255/255, 100/255, 200/255},
+            [3] = {127/255, 255/255,  50/255},
+            [4] = {255/255, 127/255,  50/255},
+            [5] = { 50/255, 200/255, 255/255}
         }
     else
         colorsByLane = {
@@ -1047,16 +1047,16 @@ function state:draw()
     love.graphics.setLineWidth(1)
 
     -- Draw scratchboard
-    love.graphics.setColor(30, 30, 30) -- 50
+    love.graphics.setColor(30/255, 30/255, 30/255) -- 50
     love.graphics.rectangle("fill", x - 192, 0, 384, height)
-    love.graphics.setColor(150, 150, 150)
+    love.graphics.setColor(150/255, 150/255, 150/255)
     love.graphics.rectangle("line", x - 192, 0, 384, height)
 
     -- Draw beat lines
     local beatX1 = x - 192
     local beatX2 = x + 192
 
-    love.graphics.setColor(255, 255, 255, 20)
+    love.graphics.setColor(255/255, 255/255, 255/255, 20)
 
     love.graphics.push()
     love.graphics.translate(0, -self:getBeatScale() * (1 - (position - math.floor(position))))
@@ -1070,37 +1070,37 @@ function state:draw()
     -- Draw combo steps
     for i=1, 7 do
         if self.combo >= 24 or self.combo % 8 >= i then
-            love.graphics.setColor(200, 100, 30)
+            love.graphics.setColor(200/255, 100/255, 30/255)
         else
-            love.graphics.setColor(50, 50, 60)
+            love.graphics.setColor(50/255, 50/255, 60/255)
         end
 
         love.graphics.rectangle("fill", x + 168, y - 64 - i * 12, 16, 8)
-        love.graphics.setColor(255, 255, 255, 10)
+        love.graphics.setColor(255/255, 255/255, 255/255, 10)
         love.graphics.rectangle("fill", x + 168, y - 64 - i * 12, 16, 4)
     end
 
     if self.combo >= 8 then
         local mult = math.min(4, 1 + math.floor(self.combo / 8))
         love.graphics.setFont(self.comboFont)
-        -- love.graphics.setColor(60, 60, 60)
+        -- love.graphics.setColor(60/255, 60/255, 60/255)
         -- love.graphics.printf("x" .. mult, x + 119, y - 64 - 7 * 12 - 36, 64, "right")
-        love.graphics.setColor(200, 100, 30)
+        love.graphics.setColor(200/255, 100/255, 30/255)
         love.graphics.printf("x" .. mult, x + 120, y - 64 - 7 * 12 - 35, 64, "right")
     end
 
     if self.rewind then
         love.graphics.setFont(self.regularFont)
-        -- love.graphics.setColor(60, 60, 60)
+        -- love.graphics.setColor(60/255, 60/255, 60/255)
         -- love.graphics.printf("REWIND", x + 119, y - 64 - 7 * 12 - 36 - 24, 64, "right")
-        love.graphics.setColor(200, 100, 30)
+        love.graphics.setColor(200/255, 100/255, 30/255)
         love.graphics.printf("REWIND", x + 120, y - 64 - 7 * 12 - 35 - 24, 64, "right")
     end
 
     -- local rating = (1 - self.stats.missCount / self.stats.noteCount)
     -- rating = math.floor(rating * 1000 + self:getWindow()) / 10
     -- love.graphics.setFont(self.regularFont)
-    -- love.graphics.setColor(200, 100, 30)
+    -- love.graphics.setColor(200/255, 100/255, 30/255)
     -- love.graphics.printf(rating, x + 120 - 200, y - 64 - 7 * 12 - 35 - 24 - 30, 64 + 200, "right")
 
     -- Draw controls for fading and notes
@@ -1119,11 +1119,11 @@ function state:draw()
         draw_button(lanes[3]                           , y, self:isLanePressed(2) and "pressed" or (self.laneUsed[2] and "used" or "normal"), colors[2])
         draw_button(lanes[4] + self.faderAnimRight * 64, y, self:isLanePressed(3) and "pressed" or (self.laneUsed[3] and "used" or "normal"), colors[3])
 
-        love.graphics.setColor(colors[1][1], colors[1][2], colors[1][3], 255 * self.glowStrength[1])
+        love.graphics.setColor(colors[1][1], colors[1][2], colors[1][3], self.glowStrength[1])
         love.graphics.draw(self.glowImage, lanes[1] + self.faderAnimLeft  * 64 - 30, y - 30, 0, 2, 2)
-        love.graphics.setColor(colors[2][1], colors[2][2], colors[2][3], 255 * self.glowStrength[2])
+        love.graphics.setColor(colors[2][1], colors[2][2], colors[2][3], self.glowStrength[2])
         love.graphics.draw(self.glowImage, lanes[3]                            - 30, y - 30, 0, 2, 2)
-        love.graphics.setColor(colors[3][1], colors[3][2], colors[3][3], 255 * self.glowStrength[3])
+        love.graphics.setColor(colors[3][1], colors[3][2], colors[3][3], self.glowStrength[3])
         love.graphics.draw(self.glowImage, lanes[4] + self.faderAnimRight * 64 - 30, y - 30, 0, 2, 2)
     end
 
@@ -1191,7 +1191,7 @@ function state:draw()
         beat_strength = beat_strength ^ 2
 
         love.graphics.setLineWidth(2)
-        love.graphics.setColor(127, 127, 127)
+        love.graphics.setColor(127/255, 127/255, 127/255)
         love.graphics.line(vertices_mid)
         if self.laneFillAnim[2] > 0 then
             love.graphics.setLineWidth(2 + 2 * beat_strength)
@@ -1200,7 +1200,7 @@ function state:draw()
         end
 
         love.graphics.setLineWidth(2)
-        love.graphics.setColor(127, 127, 127)
+        love.graphics.setColor(127/255, 127/255, 127/255)
         love.graphics.line(vertices_left)
         if self.laneFillAnim[1] > 0 then
             love.graphics.setLineWidth(2 + 2 * beat_strength)
@@ -1209,7 +1209,7 @@ function state:draw()
         end
 
         love.graphics.setLineWidth(2)
-        love.graphics.setColor(127, 127, 127)
+        love.graphics.setColor(127/255, 127/255, 127/255)
         love.graphics.line(vertices_right)
         if self.laneFillAnim[3] > 0 then
             love.graphics.setLineWidth(2 + 2 * beat_strength)
@@ -1267,8 +1267,8 @@ function state:draw()
                 local shaftSecondary
 
                 if not held and old then
-                    shaftPrimary = {60, 60, 60}
-                    shaftSecondary = {25, 25, 25}
+                    shaftPrimary = {60/255, 60/255, 60/255}
+                    shaftSecondary = {25/255, 25/255, 25/255}
                 else
                     shaftPrimary = tipPrimary
                     shaftSecondary = tipSecondary
@@ -1290,7 +1290,7 @@ function state:draw()
 
                 -- Draw some arrows or something
                 if note[4] then
-                    love.graphics.setColor(255, 255, 255)
+                    love.graphics.setColor(255/255, 255/255, 255/255)
                     love.graphics.setLineWidth(4)
 
                     for _, scratch in ipairs(note[4]) do
@@ -1371,13 +1371,13 @@ function state:draw()
                 --     love.graphics.setColor(color[1] * 0.10, color[2] * 0.10, color[3] * 0.10)
                 --     love.graphics.circle("line", lanes[note[2]], y - offset * self:getBeatScale(), 16, 32)
                 -- else
-                --     love.graphics.setColor(60, 60, 60)
+                --     love.graphics.setColor(60/255, 60/255, 60/255)
                 --     love.graphics.circle("fill", lanes[note[2]], y - last * self:getBeatScale(), 16, 32)
-                --     love.graphics.setColor(25, 25, 25)
+                --     love.graphics.setColor(25/255, 25/255, 25/255)
                 --     love.graphics.circle("line", lanes[note[2]], y - last * self:getBeatScale(), 16, 32)
-                --     love.graphics.setColor(60, 60, 60)
+                --     love.graphics.setColor(60/255, 60/255, 60/255)
                 --     love.graphics.rectangle("fill", lanes[note[2]] - 16, y - last * self:getBeatScale(), 32, length * self:getBeatScale())
-                --     love.graphics.setColor(25, 25, 25)
+                --     love.graphics.setColor(25/255, 25/255, 25/255)
                 --     love.graphics.line(lanes[note[2]] - 16, y - last * self:getBeatScale(), lanes[note[2]] - 16, y - offset * self:getBeatScale())
                 --     love.graphics.line(lanes[note[2]] + 16, y - last * self:getBeatScale(), lanes[note[2]] + 16, y - offset * self:getBeatScale())
                 --     love.graphics.setColor(color[1] * 0.65, color[2] * 0.65, color[3] * 0.65)
@@ -1387,7 +1387,7 @@ function state:draw()
                 -- end
             end
         elseif not self.noteUsed[note] and offset >= 0 then
-          local alpha = 255
+          local alpha = 255/255
 
           if self.mods.ghost and offset < 2 then
             alpha = math.max(0, (offset - 1) * 255)
@@ -1408,20 +1408,20 @@ function state:draw()
     love.graphics.setFont(self.comboFont)
     love.graphics.setLineWidth(2)
     -- Draw a rectangle around the score
-    love.graphics.setColor(50, 50, 50)
+    love.graphics.setColor(50/255, 50/255, 50/255)
     love.graphics.rectangle("fill", 72, 72, 175, 42)
-    love.graphics.setColor(150, 150, 150)
+    love.graphics.setColor(150/255, 150/255, 150/255)
     love.graphics.rectangle("line", 72, 72, 175, 42)
     -- Draw the score number
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.print(util.addSeparators(self.stats.score), 72 + 8, 72 + 8)
     -- Draw a rectangle around the combo
-    love.graphics.setColor(50, 50, 50)
+    love.graphics.setColor(50/255, 50/255, 50/255)
     love.graphics.rectangle("fill", 72, 72 + 42 + 8, 100, 42)
-    love.graphics.setColor(150, 150, 150)
+    love.graphics.setColor(150/255, 150/255, 150/255)
     love.graphics.rectangle("line", 72, 72 + 42 + 8, 100, 42)
     -- Draw the combo number
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.print(util.addSeparators(self.combo), 72 + 8, 72 + 42 + 8 + 8)
 
     if config.particles then
@@ -1446,7 +1446,7 @@ function state:draw()
     if self.messageTime > 0 then
         local fade = self.messageTime <= 0.5 and self.messageTime / 0.5 or 1
 
-        love.graphics.setColor(255, 255, 255, 255 * fade)
+        love.graphics.setColor(255/255, 255/255, 255/255, 255/255 * fade)
         love.graphics.setFont(self.messageFont)
         love.graphics.printf(self.messageText, 128, height / 3 - 24, width - 256, "center")
     end
@@ -1455,10 +1455,10 @@ function state:draw()
     if self.startTimer > 0 then
         local fade = math.min(1, self.startTimer)
 
-        love.graphics.setColor(0, 0, 0, 50 * fade)
+        love.graphics.setColor(0, 0, 0, 50/255 * fade)
         love.graphics.rectangle("fill", 128, height / 3 - 24 - 8, width - 256, 72) -- 56
 
-        love.graphics.setColor(255, 255, 255, 255 * fade)
+        love.graphics.setColor(255/255, 255/255, 255/255, 255/255 * fade)
         love.graphics.setFont(self.messageFont)
         love.graphics.printf(self.song.author .. " - " .. self.song.title .. "\n" .. self.song.difficulty, 128, height / 3 - 24, width - 256, "center")
     end
@@ -1467,7 +1467,7 @@ function state:draw()
     if self.song.subtitles then
         local subtitle_y = y + 27
         love.graphics.setFont(self.regularFont)
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(255/255, 255/255, 255/255)
 
         local t_a
         local t_b
@@ -1512,26 +1512,26 @@ function state:draw()
         if joystick then
             local function button(x, y, label, ispressed)
                 love.graphics.setFont(self.messageFont)
-                love.graphics.setColor(150, 150, 150)
+                love.graphics.setColor(150/255, 150/255, 150/255)
                 love.graphics.setLineWidth(2)
 
                 if ispressed then
                     love.graphics.circle("fill", x + 16, y + 16, 16, 32)
-                    love.graphics.setColor(255, 255, 255)
+                    love.graphics.setColor(255/255, 255/255, 255/255)
                 end
 
                 love.graphics.circle("line", x + 16, y + 16, 16, 32)
                 love.graphics.printf(label, x, y + 3, 32, "center")
             end
 
-            -- love.graphics.setColor(255, 50, 50)
+            -- love.graphics.setColor(255/255, 50/255, 50/255)
             -- love.graphics.printf("Input overlay for gamepads not done", 0, 16, width - 16, "right")
 
             -- Draw the left stick
             local sdx = width - 32 - 32 - 8 - 32 - 8 - 32 - 24 - 32 - 16
             local sdy = 32 + 32
 
-            love.graphics.setColor(150, 150, 150)
+            love.graphics.setColor(150/255, 150/255, 150/255)
             love.graphics.setLineWidth(2)
             love.graphics.circle("line", sdx, sdy, 32, 64)
 
@@ -1549,12 +1549,12 @@ function state:draw()
 
                 love.graphics.setStencilTest(true, true)
 
-                love.graphics.setColor(200, 200, 200)
+                love.graphics.setColor(200/255, 200/255, 200/255)
                 love.graphics.arc("fill", sdx, sdy, 32 * sd, st - math.pi / 4, st + math.pi / 4, 32 * sd * 2)
                 love.graphics.setStencilTest(false)
             end
 
-            love.graphics.setColor(150, 150, 150)
+            love.graphics.setColor(150/255, 150/255, 150/255)
             love.graphics.setFont(self.strongFont)
             love.graphics.printf("Left", sdx - 32, 108, 64, "center")
 
@@ -1566,12 +1566,12 @@ function state:draw()
         else
             local function button(x, y, label, ispressed)
                 love.graphics.setFont(self.messageFont)
-                love.graphics.setColor(150, 150, 150)
+                love.graphics.setColor(150/255, 150/255, 150/255)
                 love.graphics.setLineWidth(2)
 
                 if ispressed then
                     love.graphics.rectangle("fill", x, y, 32, 32)
-                    love.graphics.setColor(255, 255, 255)
+                    love.graphics.setColor(255/255, 255/255, 255/255)
                 end
 
                 love.graphics.rectangle("line", x, y, 32, 32)
@@ -1584,18 +1584,18 @@ function state:draw()
             button(width - 32 - 32 - 8 - 32, 32, "2", love.keyboard.isDown("kp2"))
             button(width - 32 - 32, 32, "3", love.keyboard.isDown("kp3"))
 
-            love.graphics.setColor(150, 150, 150)
+            love.graphics.setColor(150/255, 150/255, 150/255)
             love.graphics.setFont(self.strongFont)
             love.graphics.printf("Numpad", width - 32 - 32 - 8 - 32 - 8 - 32, 72, 114, "center")
         end
     end
 
-    -- love.graphics.setColor(255, 255, 255)
+    -- love.graphics.setColor(255/255, 255/255, 255/255)
     -- love.graphics.print(love.timer.getFPS(), 2, 2)
 
     love.graphics.setShader()
 
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     -- love.graphics.setLineWidth(1)
     love.graphics.setLineWidth(7)
 
@@ -1626,7 +1626,7 @@ function state:draw()
 
     -- for i = math.floor(self:getFrequencyBucket(220)), math.floor(math.min(self.frequencyCount, self:getFrequencyBucket(22050))) do
     --     local x = width / 2 - 192 + (i - math.floor(self:getFrequencyBucket(220))) + 0.5
-    --     -- love.graphics.setColor(255, 255, 255, math.abs(value) * 10)
+    --     -- love.graphics.setColor(255/255, 255/255, 255/255, math.abs(value) * 10)
     --     love.graphics.line(x, 0, x, self.frequencies[i] * 720)
     -- end
 end

@@ -88,7 +88,7 @@ function state:enter(_, callback, songs, loads)
     self:select(love.math.random(1, #self.songs), 1)
   end
 
-  love.graphics.setBackgroundColor(50, 50, 50)
+  love.graphics.setBackgroundColor(50/255, 50/255, 50/255)
   love.keyboard.setKeyRepeat(true)
 end
 
@@ -406,7 +406,7 @@ function state:draw()
     w = w * scale
     h = h * scale
 
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.draw(self.image, love.window.toPixels(width / 2 - w / 2), love.window.toPixels(height / 2 - h / 2), 0, scale, scale)
   end
 
@@ -420,7 +420,7 @@ function state:draw()
     w = w * scale
     h = h * scale
 
-    love.graphics.setColor(200, 200, 200, 255 * opacity)
+    love.graphics.setColor(200/255, 200/255, 200/255, 255/255 * opacity)
     love.graphics.draw(image, width / 2 - w / 2, height / 2 - h / 2, 0, scale, scale)
   end
 
@@ -442,9 +442,9 @@ function state:draw()
     local x = 32
     local y = self:getEntryY(i, true)
 
-    love.graphics.setColor(63, 63, 63, i == self.indexSong and 224 or  63)
-    love.graphics.rectangle("line", love.window.toPixels(x), love.window.toPixels(y), love.window.toPixels(600, 60))
-    love.graphics.setColor(63, 63, 63, i == self.indexSong and 255 or 127)
+    love.graphics.setColor(63/255, 63/255, 63/255, i == self.indexSong and 224 or  63)
+    love.graphics.rectangle("fill", love.window.toPixels(x), love.window.toPixels(y), love.window.toPixels(600, 60))
+    love.graphics.setColor(63/255, 63/255, 63/255, i == self.indexSong and 255 or 127)
     love.graphics.rectangle("line", love.window.toPixels(x), love.window.toPixels(y), love.window.toPixels(600, 60))
 
     local title
@@ -476,7 +476,7 @@ function state:draw()
       end
     end
 
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.setFont(self.titleFont)
     love.graphics.print(title, love.window.toPixels(x + 8, y + 8))
     love.graphics.setFont(self.detailFont)
@@ -486,11 +486,11 @@ function state:draw()
   love.graphics.pop()
 
   love.graphics.setFont(self.headerFont)
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(255/255, 255/255, 255/255)
   love.graphics.printf("Select a track", love.window.toPixels(32), love.window.toPixels(32), love.window.toPixels(width - 64), "right")
 
   love.graphics.setFont(self.smallFont)
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(255/255, 255/255, 255/255)
   love.graphics.printf("Left/Right to change difficulty",
     love.window.toPixels(32),
     love.window.toPixels(height - 12 - 32),

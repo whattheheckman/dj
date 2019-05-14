@@ -80,18 +80,18 @@ function state:draw()
 
   local width, height = love.window.fromPixels(love.graphics.getDimensions())
 
-  love.graphics.setColor(0, 0, 0, self.visibility * 127)
+  love.graphics.setColor(0, 0, 0, self.visibility * 127/255)
   love.graphics.rectangle("fill", 0, 0, width, height)
 
   love.graphics.push()
   love.graphics.translate(love.window.toPixels(width / 2, height / 2))
   love.graphics.scale(self.visibility)
 
-  love.graphics.setColor(200, 200, 200)
+  love.graphics.setColor(200/255, 200/255, 200/255)
   love.graphics.rectangle("fill", -300, -200, 600, 400)
 
   love.graphics.setFont(self.font)
-  love.graphics.setColor(90, 90, 90)
+  love.graphics.setColor(90/255, 90/255, 90/255)
   love.graphics.printf(self.contents .. "\n\nEnter to confirm, Escape to dismiss.", -200 + 4, -60, 400 - 8, "center")
 
   love.graphics.pop()

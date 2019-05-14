@@ -147,7 +147,7 @@ function state:enter()
     self.screen = self.screenProps.main
 
     love.keyboard.setKeyRepeat(true)
-    love.graphics.setBackgroundColor(75, 75, 75)
+    love.graphics.setBackgroundColor(75/255, 75/255, 75/255)
 end
 
 function state:setScreen(name, focus)
@@ -391,9 +391,9 @@ function state:update(dt)
     local scale = love.window.getDPIScale()
 
     local colors = {
-        {127, 255,  50},
-        {255,  50,  50},
-        {  0, 127, 255},
+        {127/255, 255/255, 50/255},
+        {255/255,  50/255,  50/255},
+        {  0/255, 127/255, 255/255},
     }
 
     if #self.worms == 0 or (#self.worms < 15 and love.math.random() < 0.02) then
@@ -499,7 +499,7 @@ function state:draw()
         love.graphics.line(entry.path)
     end
 
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     util.imageFill(self.vignette)
 
     local width, height = love.window.fromPixels(love.graphics.getDimensions())
@@ -522,7 +522,7 @@ function state:draw()
         local x, y = control.pos(width, height)
 
         if self.focused == index then
-            love.graphics.setColor(255, 255, 255, 50)
+            love.graphics.setColor(255/255, 255/255, 255/255, 50)
             love.graphics.rectangle("fill", x, y, 300, 40)
         end
 
@@ -530,16 +530,16 @@ function state:draw()
             -- local size = 32
             local scale = love.window.toPixels(40) / 100
 
-            love.graphics.setColor(255, 255, 255)
+            love.graphics.setColor(255/255, 255/255, 255/255)
             love.graphics.draw(prompts[control.prompt],
                 love.window.toPixels(x - 40),
                 love.window.toPixels(y),
                 0, scale, scale)
         end
 
-        love.graphics.setColor(10, 10, 10)
+        love.graphics.setColor(10/255, 10/255, 10/255)
         love.graphics.print(control.text, love.window.toPixels(x + 7, y + 7))
-        love.graphics.setColor(245, 245, 245)
+        love.graphics.setColor(245/255, 245/255, 245/255)
         love.graphics.print(control.text, love.window.toPixels(x + 6, y + 6))
     end
 end

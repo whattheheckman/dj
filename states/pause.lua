@@ -139,29 +139,29 @@ function state:draw()
 
   local width, height = love.window.fromPixels(love.graphics.getDimensions())
 
-  love.graphics.setColor(0, 0, 0, self.visibility * 127)
+  love.graphics.setColor(0, 0, 0, self.visibility * 127/255)
   love.graphics.rectangle("fill", 0, 0, width, height)
 
   love.graphics.push()
   love.graphics.translate(love.window.toPixels(width / 2, height / 2))
   love.graphics.scale(self.visibility)
 
-  love.graphics.setColor(200, 200, 200)
+  love.graphics.setColor(200/255, 200/255, 200/255)
   love.graphics.rectangle("fill", -300, -200, 600, 400)
 
-  love.graphics.setColor(50, 50, 50)
+  love.graphics.setColor(50/255, 50/255, 50/255)
   love.graphics.setFont(self.headerFont)
   love.graphics.printf("PAUSED", love.window.toPixels(-200), love.window.toPixels(-150), love.window.toPixels(400), "center")
 
   love.graphics.setFont(self.itemFont)
-  love.graphics.setColor(90, 90, 90)
+  love.graphics.setColor(90/255, 90/255, 90/255)
   love.graphics.rectangle("fill", love.window.toPixels(-200), love.window.toPixels(-60 + (self.selection - 1) * 36), love.window.toPixels(400, 32))
 
   for i, item in ipairs(self.items) do
     if i == self.selection then
-      love.graphics.setColor(240, 240, 240)
+      love.graphics.setColor(240/255, 240/255, 240/255)
     else
-      love.graphics.setColor(110, 110, 110)
+      love.graphics.setColor(110/255, 110/255, 110/255)
     end
 
     love.graphics.print(item[1], love.window.toPixels(-200 + 4, -60 + (i - 1) * 36 + 2))

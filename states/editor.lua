@@ -421,22 +421,22 @@ function state:update()
 end
 
 local function draw_fader_back(x, y)
-  love.graphics.setColor( 50,  50,  50)
+  love.graphics.setColor( 50/255,  50/255,  50/255) --divided by 255 because love v11 uses 0-1 instead of 0-255
   love.graphics.circle("fill", x,      y, 24)
   love.graphics.circle("fill", x + 64, y, 24)
-  love.graphics.setColor(150, 150, 150)
+  love.graphics.setColor(150/255, 150/255, 150/255)
   love.graphics.circle("line", x,      y, 24)
   love.graphics.circle("line", x + 64, y, 24)
-  love.graphics.setColor( 50,  50,  50)
+  love.graphics.setColor( 50/255,  50/255,  50/255)
   love.graphics.rectangle("fill", x, y - 24, 64, 48)
-  love.graphics.setColor(150, 150, 150)
+  love.graphics.setColor(150/255, 150/255, 150/255)
   love.graphics.line(x, y - 24, x + 64, y - 24)
   love.graphics.line(x, y + 24, x + 64, y + 24)
 end
 
 local function draw_button(x, y, color, dot)
-  dot = dot or {130, 130, 130}
-  color = color or {255, 255, 255}
+  dot = dot or {130/255, 130/255, 130/255}
+  color = color or {1, 1, 1} --used to be 255, 255, 255 but love v11 uses 0-1 instead of 0-255
 
   love.graphics.setColor(color[1] * 0.2, color[2] * 0.2, color[3] * 0.2)
   love.graphics.circle("fill", x, y, 20)
@@ -462,20 +462,20 @@ function state:draw()
     }
 
     local colors = {
-      [1] = {127, 255,  50},
-      [2] = {255,  50,  50},
-      [3] = {  0, 127, 255},
+      [1] = {127/255, 255/255,  50/255},
+      [2] = {255/255,  50/255,  50/255},
+      [3] = {  0/255, 127/255, 255/255},
     }
 
     local colorsByLane
 
     if self.song.mode == "5key" then
       colorsByLane = {
-        [1] = {255, 255,  50},
-        [2] = {255, 100, 200},
-        [3] = {127, 255,  50},
-        [4] = {255, 127,  50},
-        [5] = { 50, 200, 255}
+        [1] = {255/255, 255/255,  50/255},
+        [2] = {255/255, 100/255, 200/255},
+        [3] = {127/255, 255/255,  50/255},
+        [4] = {255/255, 127/255,  50/255},
+        [5] = { 50/255, 200/255, 255/255}
       }
     else
       colorsByLane = {
@@ -488,7 +488,7 @@ function state:draw()
     end
 
     -- Draw scratchboard
-    love.graphics.setColor(30, 30, 30)
+    love.graphics.setColor(30/255, 30/255, 30/255)
     love.graphics.rectangle("fill", x - 192, 0, 384, height)
 
     -- Draw beat lines
@@ -539,10 +539,10 @@ function state:draw()
 
             if offset >= 0 and lane[2] ~= last_fade then
                 if lane[1] == last_beat then
-                    love.graphics.setColor(255, 0, 0)
+                    love.graphics.setColor(255/255, 0/255, 0/255)
                     love.graphics.setLineWidth(4)
                 else
-                    love.graphics.setColor(255, 0, 255, 100)
+                    love.graphics.setColor(255/255, 0/255, 255, 100/255)
                     love.graphics.setLineWidth(4)
                 end
 
@@ -652,7 +652,7 @@ function state:draw()
                 if note[4] then
                     local x = lanes[note[2]]
 
-                    love.graphics.setColor(255, 255, 255)
+                    love.graphics.setColor(255/255, 255/255, 255/255)
                     love.graphics.setLineWidth(4)
 
                     for _, scratch in ipairs(note[4]) do
@@ -708,9 +708,9 @@ function state:draw()
     local progress = position / duration
 
     love.graphics.setFont(self.timeFont)
-    love.graphics.setColor(80, 80, 80)
+    love.graphics.setColor(80/255, 80/255, 80/255)
     love.graphics.rectangle("fill", bx, by, bw, bh)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     -- love.graphics.printf(util.secondsToTime(math.ceil(duration)), bx, by + 1, bw - 2, "right")
 
     -- Draw all notes on the progress bar
@@ -725,11 +725,11 @@ function state:draw()
     end
 
     local scaled = math.floor(bw * progress)
-    love.graphics.setColor(200, 200, 200, 100)
+    love.graphics.setColor(200/255, 200/255, 200/255, 100/255)
     love.graphics.rectangle("fill", bx, by, scaled, bh)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.line(bx, by, bx + scaled - 0.5, by - 0.5)
-    love.graphics.setColor(200, 200, 200)
+    love.graphics.setColor(200/255, 200/255, 200/255)
 
     local text = util.secondsToTime(math.floor(position)) .. "/" .. util.secondsToTime(math.ceil(duration))
     local size = love.graphics.getFont():getWidth(text)
@@ -740,7 +740,7 @@ function state:draw()
     --       love.graphics.rectangle("fill", bx, by, scaled, bh)
     --   end)
     --
-    --   love.graphics.setColor(40, 40, 40)
+    --   love.graphics.setColor(40/255, 40/255, 40/255)
     --   love.graphics.printf(util.secondsToTime(math.floor(position)), bx, by + 1, scaled - 2, "right")
     --
     --   love.graphics.setStencil()
@@ -748,7 +748,7 @@ function state:draw()
 
     if self.unsaved then
       love.graphics.setFont(self.warningFont)
-      love.graphics.setColor(200, 100, 30)
+      love.graphics.setColor(200/255, 100/255, 30/255)
       love.graphics.printf("Unsaved", 0, 8, width - 8, "right")
     end
 end

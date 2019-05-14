@@ -19,7 +19,7 @@ function state:enter(_, filename, song, stats)
   self.stats = stats
   self.flash = 1
 
-  love.graphics.setBackgroundColor(60, 60, 60)
+  love.graphics.setBackgroundColor(60/255, 60/255, 60/255)
 end
 
 function state:leave()
@@ -58,14 +58,14 @@ function state:draw()
     w = w * scale
     h = h * scale
 
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(255/255, 255/255, 255/255)
     love.graphics.draw(self.image, width / 2 - w / 2, height / 2 - h / 2, 0, scale, scale)
 
     love.graphics.setColor(0, 0, 0, 120)
     love.graphics.rectangle("fill", 0, 0, width, height)
   end
 
-  love.graphics.setColor(255, 255, 255)
+  love.graphics.setColor(255/255, 255/255, 255/255)
   love.graphics.setFont(self.scoreFont)
   love.graphics.printf(util.addSeparators(self.stats.score), 50, 50, width - 100)
   love.graphics.printf(math.floor((self.stats.hitCount / self.stats.noteCount) * 1000 + 0.5) / 10 .. "%", 50, 50, width - 100, "right")
@@ -79,13 +79,13 @@ function state:draw()
     50 + 50, 50 + 72 + 50, width - 200)
 
   if self.flash < 0.5 then
-    love.graphics.setColor(255, 255, 255, 255 * (1 - self.flash / 0.5))
+    love.graphics.setColor(255/255, 255/255, 255/255, 255/255 * (1 - self.flash / 0.5))
     love.graphics.setFont(self.hintFont)
     love.graphics.print("Press Enter or A to continue", 50, height - 50 - 32)
   end
 
   if self.flash > 0 then
-    love.graphics.setColor(255, 255, 255, 255 * self.flash)
+    love.graphics.setColor(255/255, 255/255, 255/255, 255/255 * self.flash)
     love.graphics.rectangle("fill", 0, 0, width, height)
   end
 end

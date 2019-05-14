@@ -12,7 +12,7 @@ function state:init()
 end
 
 function state:enter(_, callback)
-  love.graphics.setBackgroundColor(255, 255, 255)
+  love.graphics.setBackgroundColor(255/255, 255/255, 255/255)
 
   self.delay = 0
   self.callback = callback
@@ -81,7 +81,7 @@ function state:draw()
   love.graphics.push()
   love.graphics.translate(width / 2, 0)
   love.graphics.translate(-128 * (beat - math.floor(beat)), 0)
-  love.graphics.setColor(0, 0, 0, 127)
+  love.graphics.setColor(0/255, 0/255, 0/255, 127/255)
   love.graphics.setLineWidth(1)
 
   local ticks = math.ceil(width / 128 / 2)
@@ -94,7 +94,7 @@ function state:draw()
   love.graphics.pop()
 
   local beatPower = (1 - (beat - math.floor(beat))) ^ 8
-  love.graphics.setColor(0, 0, 0)
+  love.graphics.setColor(0/255, 0/255, 0/255)
   love.graphics.setLineWidth(2 + beatPower * 2)
   love.graphics.line(width / 2, lineY1 - 64 - beatPower * 8, width / 2, lineY2 + 64 + beatPower * 8)
 
