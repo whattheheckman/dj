@@ -35,6 +35,7 @@ function state:init()
 
     self.screenProps = {
         exit = {
+            title = "Exit to desktop?",
             {
                 text = "Back",
                 prompt = "back",
@@ -100,6 +101,16 @@ function state:init()
         },
         settings = {
             title = "Settings",
+            --[[{
+              text = "Set button delay",
+              keyfocus = true,
+              activate = function()
+                  delaytest:run()
+                    gamestate.switch()
+                  end
+              end,
+              pos = function(w, h) return w / 14, h / 2 end
+            }, ]]--
             {
                 text = "Back",
                 prompt = "back",
@@ -156,6 +167,7 @@ function state:setScreen(name, focus)
 
     if self.controlScheme ~= "mouse" then
         if focus then
+          
             self:setFocus(focus, true)
         else
             self:next(true)

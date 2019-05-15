@@ -77,6 +77,8 @@ function state:enter(_, filename, song, data, mods, startFromEditor)
   self.audioSource = love.audio.newSource(self.audioData)
   self.audioSource:setPitch(self.mods.speed or 1)
   self.audioSource:play()
+  songDuration = 0
+  songDuration = self.audioSource:getDuration("seconds")
 
   if song.video then
     local videoname = util.filepath(filename) .. song.video
@@ -138,17 +140,18 @@ function state:leave()
   self.audioSource:stop()
   self.audioSource = nil
   self.audioData = nil
+  stopped = true
 
   if self.video then
     self.video:pause()
     self.video = nil
   end
+end
 
   local joystick = love.joystick:getJoysticks()[1]
   if joystick then
     joystick:setVibration()
   end
-end
 
 function state:pause()
   love.mouse.setVisible(true)
@@ -179,6 +182,7 @@ function state:getBeatScale()
   return self.song.beatScale or 64
 end
 
+--how long the song is
 function state:getCurrentPosition()
   local time = self.audioSource:tell("seconds") - self.startTimer - (self.song.offset or 0)
   return time / (1 / (self.song.bpm / 60))
@@ -511,7 +515,8 @@ function state:getFrequencyBucket(freq)
 end
 
 function state:update(dt)
-    if self.audioSource:isPlaying() ~= true  then
+  --song ending code
+  if stopped then
         if self.startFromEditor then
             gamestate.pop()
         else
