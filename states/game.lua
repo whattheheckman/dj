@@ -925,8 +925,8 @@ local function draw_button(x, y, buttonstate, color)
     fill = {204/255, 204/255, 204/255}
     blip = color
   elseif buttonstate == "pressed" then
-    edge = {color[1] * 0.4, color[2] * 0.4, color[3] * 0.4}
-    fill = {color[1] * 0.95, color[2] * 0.95, color[3] * 0.95}
+    edge = color --{(color[1] * 0.4)/255, (color[2] * 0.4)/255, (color[3] * 0.4)/255}
+    fill = color --{(color[1] * 0.95)/255, (color[2] * 0.95)/255, (color[3] * 0.95)}
     blip = color
   end
 
@@ -1081,7 +1081,6 @@ function state:draw()
         end
 
         love.graphics.rectangle("fill", x + 168, y - 64 - i * 12, 16, 8)
-        love.graphics.setColor(255/255, 255/255, 255/255, 10)
         love.graphics.rectangle("fill", x + 168, y - 64 - i * 12, 16, 4)
     end
 

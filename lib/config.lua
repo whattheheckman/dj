@@ -11,7 +11,7 @@ local config = {
   particles = true,
   vibration = true,
   vibrationStrength = 1,
-  showInput = false
+  showInput = true
 }
 
 setmetatable(config, {
